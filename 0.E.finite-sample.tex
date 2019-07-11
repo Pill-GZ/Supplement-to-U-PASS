@@ -1,0 +1,53 @@
+
+The result of our power calculations above are only accurate to the extend that the asymptotic approximations are applicable.
+In practice, of course, we have only finite samples, and the asymptotic approximations no longer hold when cell counts are low.
+While existing tools have completely ignored this issue, we offer here a simple correction in finite samples by resorting to exact tests.
+
+Specifically, we calculate the minimum number of observations of the genetic variants needed for Fisher's exact test to be correctly calibrated, referred to as the {\bf minimum calibration numbers}.
+As we shall see in simulations in Section \ref{sec:numerical}, they provide a useful lower bound on the variant counts necessary for any asymptotic approximations to apply.
+
+For a contingency table with marginal phenotype counts $(n_1, n_2)$, and marginal genetic variant counts $(m_1, m_2)$, we calculate the p-values of the most extreme observations according to Fisher's exact test.
+For rare risk alleles, this corresponds to the following table.
+\begin{center}
+    \begin{tabular}{cccc}
+    \hline
+    & \multicolumn{2}{c}{Allele type} \\
+    \cline{2-3}
+    \# Observations & Variant 1 & Variant 2 & Counts by phenotype \\
+    \hline
+    Cases & $m_1$ & $n_1-m_1$ & $n_1$ \\
+    Controls & $0$ & $n_2$ & $n_2$ \\
+    \hline
+    \end{tabular}
+\end{center}
+If the p-values do not fall below the desired type I error threshold, then the rejection region (for $O_{11}$) must lie beyond $m_1$. 
+Under the fixed marginal assumptions of Fisher's exact test, no contingency tables with the given marginals can be rejected at the specified level.
+In other words, we have given up all power to achieve proper type I error control.
+Therefore, the minimum counts needed for the risk allele count must exceed $m_1$, in order for association tests to have any power.
+
+For rare non-risk alleles, the most extreme observation corresponds to the following table.
+\begin{center}
+    \begin{tabular}{cccc}
+    \hline
+    & \multicolumn{2}{c}{Allele type} \\
+    \cline{2-3}
+    \# Observations & Variant 1 & Variant 2 & Counts by phenotype\\
+    \hline
+    Cases & $n_1$ & $0$ & $n_1$ \\
+    Controls & $n_2-m_2$ & $m_2$ & $n_2$ \\
+    \hline
+    \end{tabular}
+\end{center}
+We can similarly determine the minimum number of non-risk allele counts needed to achieve non-zero power at the given type I error target, for a given phenotype marginals $(n_1, n_2)$.
+
+For correctly calibrated tests, an alternative hypothesis with expected variant counts less than the minimum calibration numbers should have power close to zero; asymptotic power approximations do not apply for these alternatives.
+We correct the asymptotic approximations laid out in Section \ref{subsec:power-calculation} by setting the predicted statistical power for alternatives in this ``rare-variant zone'' to zero.
+
+% We conduct an extensive simulation study to examine the quality of this finite-sample correction in Section \ref{sec:numerical}.
+% We find this simple rule produces accurate corrections, matching up well to the simulated powers of exact tests.
+% In general, the correction kicks in only for small sample sizes.
+
+In the web-based application U-PASS, we mark the ``rare-variant zone'' with red dashed lines in the OR-RAF diagram.
+We also provide options for users to specify the rare-variant threshold by absolute number of counts, or as a fraction of the total number of subjects.
+% We find these two options ad-hoc; the minimum calibration numbers approach provides a more theoretically grounded approximation in power calculations for rare-variants.
+

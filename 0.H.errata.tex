@@ -1,0 +1,14 @@
+We identify an error in the software implementation of \citet{Johnson17}.
+
+In particular, \citet{Johnson17} specify the alternative hypothesis with a disease model (additive, dominant, etc.), disease prevalence $K$, and the risk allele frequency \emph{in the population} $q$ (notice that this differs from our definition, and from the reporting standard of NHGRI-EBI GWAS Catalog). 
+
+Assuming Hardy-Weinberg equilibrium, the expected frequency of genotypes $(aa, aA, AA)$ is $((1-q)^2, q(1-q), q^2)$.
+The relative risks $R_{aA}$, $R_{AA}$ for the latter two genotypes are calculated based on the assumed disease model and the assumed relative risks $R_{aA}$.
+
+By an application of Bayes' rule, the conditional probabilities of Cases, given the genotypes are
+\begin{align}
+    \mathbb P[\mathrm{Case}|aa] &= \frac{K}{(1-q)^2 + 2(1-q)qR_{aA} + q^2R_{AA}} \\
+    \mathbb P[\mathrm{Case}|aA] &= \mathbb P[\mathrm{Case}|aa] \times R_{aA} \\
+    \mathbb P[\mathrm{Case}|AA] &= \mathbb P[\mathrm{Case}|aa] \times R_{AA}.
+\end{align}
+A valid disease model dictates that each of these probabilities are between 0 and 1.

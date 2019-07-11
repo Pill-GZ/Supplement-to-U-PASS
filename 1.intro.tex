@@ -1,0 +1,30 @@
+% Power analysis is a crucial in the planning, as well as in reviewing, of genome-wide association studies (GWAS).
+There has been no shortage of power calculators for genome-wide association studies (GWAS).
+Early efforts by \cite{Sham98} enabled power analysis of likelihood ratio tests for associations between marker SNP's and quantitative or qualitative traits; the results were implemented in the GPC calculator \citep{Purcell03}.
+Subsequently, \cite{Skol06} studied the performance of two-sample t-tests, and extended the analysis to two-stage designs; the results were implemented in their CaTS calculator, and more recently, the GAS calculator for one-stage designs \citep{Johnson17}.
+\citealp{Menashe08} independently implemented the latter calculations in the PGA calculator.
+Recent works have studied power of a number of SNP-set based tests targeting rare variants \citep{Wang14, Derkach17}.
+An exhaustive review is beyond the scope of this paper.
+
+It is worth noting that power analyses are, inevitably, tied to the underlying models and the statistical procedures used.
+In particular, power calculations performed under a certain model-method combination may not be valid if either the model or the method changes.
+This is a rule well-observed in studies comparing powers of SNP-set based methods, but perhaps sometimes forgotten when performing single SNP based association tests.
+For example, neither CaTS, GAS, nor PGA are explicit about the testing procedures that should be assumed.
+In principle, power calculations based on likelihood ratio tests or t-tests cease to hold for studies running, say, logistic regressions or chi-squared tests.
+
+Along with the multitude of models come conflicting definitions. 
+A typical example is risk allele frequency (RAF), for which we identify at least three different definitions, detailed in the Supplement. 
+While GWAS Catalogs -- such as the one hosted by NHGRI-EBI \citep{MacArthur16} -- require studies to report RAF \emph{in control groups}, all aforementioned power calculators in fact assume the RAF input as the counterpart \emph{in the general population}, a differently defined quantity.
+
+Along with the multitude of methods also come diverging reporting practices.
+While some studies report estimated odds ratios (OR), others report, e.g., estimated slope coefficients from logistic regressions, both of which are accepted in the NHGRI-EBI GWAS Catalog.
+
+As a result, it is not only challenging to use the power calculation tools for planning GWAS studies correctly, 
+but also difficult to systematically review the statistical validity of findings reported in the literature, since different models and tests must be handled differently, and with care.
+
+Lastly, we point out the overlooked issue of rare variants in earlier power calculators.
+While existing tools rely on large sample approximations, they are completely silent to the failures of such approximations in finite samples.
+It is not clear if results from such asymptotic analysis are reliable especially when variant counts are low.
+
+In an effort to address these difficulties and deficiencies, we propose in this work a unified framework for power analysis of single SNP based association studies.
+The ideas are implemented in a use-friendly software tool, enabling model-free test-independent power analysis, as well as systematic reviews of reported findings of their statistical validity.

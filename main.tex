@@ -1,0 +1,200 @@
+%\documentclass{bioinfo}
+%\copyrightyear{2019} \pubyear{2019}
+
+%\access{Advance Access Publication Date: Day Month Year}
+%\appnotes{Applications Note}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath, amsfonts, amsthm}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+
+\usepackage[margin=1.25in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{subfigure}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{authblk}
+
+\setcounter{tocdepth}{2}
+
+\begin{document}
+%\firstpage{1}
+
+%\subtitle{Genetic and population analysis}
+
+% \title[Supplement to Unified GWAS power analysis]{Supplement to ``U-PASS: unified power analysis and forensics for qualitative traits in GWAS''}
+\title{Supplement to ``U-PASS: unified power analysis and forensics for qualitative traits in gentic association studies''}
+\author[1]{Zheng Gao\thanks{Corresponding author: gaozheng@umich.edu}}
+\author[1]{Jonathan Terhorst}
+\author[2]{Cristopher Van Hout}
+\author[1]{Stilian Stoev}
+\affil[1]{Department of Statistics, University of Michigan, Ann Arbor, MI 48109, USA}
+\affil[2]{Regeneron Genetics Center, Tarrytown, NY 10591 USA.}
+%\author[Gao \textit{et~al}.]{Zheng Gao\,$^{\text{\sfb 1,}*}$, Jonathan Terhorst\,$^{\text{\sfb 1}}$, Cris Van Hout\,$^{\text{\sfb 2}}$, and Stilian Stoev\,$^{\text{\sfb 1}}$}
+%\address{$^{\text{\sf 1}}$Department of Statistics, University of Michigan, Ann Arbor, MI 48109, USA and \\
+%$^{\text{\sf 2}}$Regeneron Genetics Center, Basking Ridge, NJ 07920, USA.}
+
+%\corresp{$^\ast$To whom correspondence should be addressed.}
+
+%\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+
+%\editor{Associate Editor: XXXXXXX}
+
+\maketitle
+
+\vspace{-20pt}
+\begin{abstract}
+   We provide a brief overview of power analysis for genetic association studies in Section \ref{sec:power-analysis-overview}.
+   The relationship between two approaches to specifying the alternative hypothesis in power calculations for association studies is clarified in Section \ref{sec:disease-models}.
+   We develop a unified analysis of statistical power for common association tests in Section \ref{sec:asymptotic-equivalence}, and provide a simple rule for finite-sample correction of the asymptotic approximations in Section \ref{sec:finite-sample}.
+   The performance of this correction is examined through numerical experiments in Section \ref{sec:numerical}.
+   Proof of the main result is found in Section \ref{sec:proof}.
+\end{abstract}
+
+\tableofcontents
+
+\section{Overview of power analysis in genetic association studies}
+\label{sec:power-analysis-overview}
+\input{0.A.power-analysis-overview.tex}
+
+\section{Two approaches to specifying the alternative hypothesis}
+\label{sec:disease-models}
+\input{0.B.disease-models.tex}
+
+\section{Use case illustrations}
+\label{sec:user-guide}
+\input{0.C.use-case-illustrations.tex}
+
+\section{Unified asymptotic analysis of power}
+\label{sec:asymptotic-equivalence}
+\input{0.D.asymptotic-equivalence.tex}
+
+\section{Finite-sample corrections}
+\label{sec:finite-sample}
+\input{0.E.finite-sample.tex}
+
+%\vspace{*{-5pt}
+\section{Proof of Theorem \ref{thm:1}}
+\label{sec:proof}
+\input{0.F.proofs.tex}
+
+%\vspace{{10pt}
+\section{Numerical illustrations}
+\label{sec:numerical}
+\input{0.G.numerical.tex}
+
+% \section{An errata for Johnson et~al.\ (2017)}
+% \label{sec:errata}
+% \input{0.H.errata.tex}
+
+% \vspace*{-10pt}
+% \section*{Acknowledgements}
+% 
+% We thank so and so for their invaluable comments and suggestions on the early versions of the software and this paper.
+
+%\vspace{*{-12pt}
+\section*{Funding}
+
+This work is partially supported by NSF Grant DMS-1830293, Algorithms for Threat Detection.
+
+
+%\bibliographystyle{natbib}
+%\bibliographystyle{achemnat}
+%\bibliographystyle{plainnat}
+%\bibliographystyle{abbrv}
+%\bibliographystyle{bioinformatics}
+%
+%\bibliographystyle{plain}
+%
+%\bibliography{Document}
+
+%\vspace{*{-12pt}
+\begin{thebibliography}{}
+
+\normalsize{
+\bibitem[Choi {\it et~al}., 2017]{Choi17}
+Choi, L., Blume, J. D., \& Dupont, W. D. (2015). 
+Elucidating the foundations of statistical inference with 2 x 2 tables. 
+{\it PloS one}, {\bf 10(4)}, e0121263.
+
+\bibitem[Derkach {\it et~al}., 2017]{Derkach17}
+Derkach, A., Zhang, H., \& Chatterjee, N. (2017). 
+Power Analysis for Genetic Association Test (PAGEANT) provides insights to challenges for rare variant association studies. 
+{\it Bioinformatics}, {\bf 34(9)}, 1506-1513.
+
+\bibitem[Dominguez-Cruz {\it et~al}., 2018]{Dominguez-Cruz18}
+Dom\'inguez-Cruz, M. G., de Lourdes Mu\~noz, M., Totomoch-Serra, A., Garc\'ia-Escalante, M. G., Burgue\~no, J., Valadez-Gonz\'alez, N., ... \& D\'iaz-Badillo, \'A. (2018). 
+Pilot genome-wide association study identifying novel risk loci for type 2 diabetes in a Maya population. 
+{\it Gene}, {\bf 677}, 324-331.
+
+\bibitem[Ferguson, 2017]{Ferguson17}
+Ferguson, T. S. (2017). {\it A course in large sample theory}. Routledge.
+
+\bibitem[Gonz\'{a}lez {\it et~al}., 2008]{Gonzalez08}
+Gonz\'{a}lez, J. R., Carrasco, J. L., Dudbridge, F., Armengol, L., Estivill, X., \& Moreno, V. (2008). 
+Maximizing association statistics over genetic models. 
+{\it Genetic Epidemiology}, {\bf 32(3)}, 246-254.
+
+\bibitem[Hunter, 2002]{Hunter02}
+Hunter, D. (2002) Topic 25: Asymptotic Power of Pearson’s Chi-Square Test in 
+{\it Statistics 597A: Asymptotic Tools (Fall 2002), PSU Lecture notes,} http://personal.psu.edu/drh20/asymp/fall2002/lectures/ln11.pdf
+
+\bibitem[Johnson {\it et~al}., 2017]{Johnson17}
+Johnson, J. L., \& Abecasis, G. R. (2017). 
+GAS Power Calculator: web-based power calculator for genetic association studies. 
+{\it bioRxiv}, 164343.
+
+\bibitem[Lehmann, 2004]{Lehmann04}
+Lehmann, E. L. (2004). {\it Elements of large-sample theory}. Springer Science \& Business Media.
+
+\bibitem[Li {\it et~al}., 2008]{Li08}
+Li, Q., Zheng, G., Li, Z., \& Yu, K. (2008). 
+Efficient approximation of P‐value of the maximum of correlated tests, with applications to genome‐wide association studies. 
+{\it Annals of human genetics}, {\bf 72(3)}, 397-406.
+
+\bibitem[MacArthur {\it et~al}., 2016]{MacArthur16}
+MacArthur, J., Bowler, E., Cerezo, M., Gil, L., Hall, P., Hastings, E., ... \& Pendlington, Z. M. (2016). 
+The new NHGRI-EBI Catalog of published genome-wide association studies (GWAS Catalog). 
+{\it Nucleic acids research}, {\bf 45(D1)}, D896-D901.
+
+\bibitem[Menashe {\it et~al}., 2008]{Menashe08}
+Menashe, I., Rosenberg, P. S., \& Chen, B. E. (2008). 
+PGA: power calculator for case-control genetic association analyses. 
+{\it BMC genetics}, {\bf 9(1)}, 36.
+
+\bibitem[Purcell {\it et~al}., 2003]{Purcell03}
+Purcell, S., Cherny, S. S., \& Sham, P. C. (2003). 
+Genetic Power Calculator: design of linkage and association genetic mapping studies of complex traits. 
+{\it Bioinformatics}, {\bf 19(1)}, 149-150.
+
+\bibitem[Ripamonti {\it et~al}., 2017]{Ripamonti17}
+Ripamonti, E., Lloyd, C., \& Quatto, P. (2017). 
+Contemporary Frequentist Views of the $2\times2$ Binomial Trial. 
+{\it Statistical Science}, {\bf 32(4)}, 600-615.
+
+\bibitem[Sham, 1998]{Sham98}
+Sham, P. C. (1998). {\it Statistics in human genetics}. Wiley.
+
+\bibitem[Skol {\it et~al}., 2006]{Skol06}
+Skol, A. D., Scott, L. J., Abecasis, G. R., \& Boehnke, M. (2006). 
+Joint analysis is more efficient than replication-based analysis for two-stage genome-wide association studies. 
+{\it Nature genetics}, {\bf 38(2)}, 209.
+
+\bibitem[Smyth {\it et~al}., 2017]{Smyth17}
+Smyth, G., Hu, Y., Dunn, P., Phipson, B., \& Chen, Y. (2017)
+statmod: Statistical Modeling.
+R package version 1.4.30.
+%{\it https://cran.r-project.org/web/packages/statmod}.
+
+\bibitem[Wang {\it et~al}., 2014]{Wang14}
+Wang, G. T., Li, B., Lyn Santos-Cortez, R. P., Peng, B., \& Leal, S. M. (2014).
+Power analysis and sample size estimation for sequence-based association studies. 
+{\it Bioinformatics}, {\bf 30(16)}, 2377-2378.
+}
+
+\end{thebibliography}
+\end{document}

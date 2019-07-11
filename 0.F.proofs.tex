@@ -1,0 +1,61 @@
+
+% We prove Theorem \eqref{thm:1} in this section.
+
+\subsection{Asymptotic equivalence of likelihood ratio tests and the chi-square test}
+The asymptotic equivalence of the likelihood ratio (LR) test and the chi-square test in 2-by-2 tables can be found in standard texts on asymptotic theory.
+See, e.g., \citet{Ferguson17} Chapter 10 and Chapter 24, and \citet{Lehmann04} Chapter 5; see also, \citet{Hunter02} for an accessible derivation of the formula \eqref{eq:non-centrality}.
+
+Recall the likelihood ratio statistic in LR test
+\begin{equation*}
+    LR = \frac{\sup_{\mu\in H_1}L(\mu)}{\sup_{\mu\in H_0}L(\mu)}.
+\end{equation*}
+where $H_0$ is the set of independent probabilities, and $H_1$ all valid 2-by-2 multinomial probabilities.
+To see the asymptotic equivalence with the LR statistic under logistic regressions with binary predictors, we reparametrize the likelihood as
+\begin{align*}
+    L(\mu) &= \mu_{11}^{O_{11}}\mu_{12}^{O_{12}}\mu_{21}^{O_{21}}(1-\mu_{11}-\mu_{12}-\mu_{21})^{O_{22}} \\
+    &= \phi^{n_1}(1-\phi)^{n_2}p_{1}^{O_{11}}(1-p_{1})^{O_{12}}p_{2}^{O_{21}}(1-p_{2})^{O_{22}}
+\end{align*}
+where we have omitted the multinomial coefficient.
+In the latter parametrization, it is easy to show that the maximizers are $\widehat{\phi} = n_1/n$, $\widehat{p_1} = O_{11}/n_1$, and $\widehat{p_1} = O_{21}/n_2$ under the alternative, and $\widehat{\phi} = n_1/n$, $\widehat{p_1} = \widehat{p_1} = (O_{11}+O_{21})/n$ under the null.
+Therefore, the terms involving $\phi$ cancels in the LR statistic, and the LR statistic coincides with the logistic regressions likelihood ratio, where $p_1$ and $p_2$ are further reparametrized as
+\begin{align*}
+    p_1 &= \exp{(\beta_0+\beta_1)}/(1+\exp{(\beta_0+\beta_1)}), \\
+    p_2 &= \exp{(\beta_0)}/(1+\exp{\beta_0}).
+\end{align*}
+Hence, the logistic regressions likelihood ratio follows the same distribution as in the original likelihood ratio test.
+Notice that this is not an immediate consequence of the invariance property of the likelihood ratio tests. Rather, it follows because $n_1$, $n_2$ are ancillary for inference of the odds ratios.
+
+\subsection{Asymptotic equivalence with Welch's t-test}
+
+We now work with the two-binomial assumption, conditioning on the phenotype marginals $n_1$, $n_2$, and show that Welch's t-test has asymptotically the same power.
+Recall the Welch t-statistic
+\begin{equation} \label{eq:Welch-t}
+    t = \frac{\widehat{p_1} - \widehat{p_2}}{\sqrt{\frac{\widehat{p_1}(1-\widehat{p_1})}{n_1} + \frac{\widehat{p_2}(1-\widehat{p_2})}{n_2}}},
+\end{equation}
+where $\widehat{p_1} = O_{11}/n_1$ and $\widehat{p_2} = O_{21}/n_2$.
+By the (Lindeberg-Feller) central limit theorem, for the sequence of alternatives defined in \eqref{eq:alternative-two-bionomial} we have 
+\begin{equation*}
+    \sqrt{n_i}(\widehat{p_i} - p_i)\big/\sqrt{p_i(1-p_i)} \Rightarrow \mathrm{N}(0,1),
+    \quad \text{for }\,i=1,2.
+\end{equation*}
+and therefore, by independence of the two binomial distributions, we have 
+\begin{equation} \label{eq:dist-statistic}
+    t - (p_1-p_2)\Big/\sqrt{\frac{{p_1}(1-{p_1})}{n_1} + \frac{{p_2}(1-{p_2})}{n_2}} \Rightarrow \mathrm{N}(0,1).
+\end{equation}
+
+By the definition of the alternatives in \eqref{eq:alternative-two-bionomial}, we know that 
+\begin{equation} \label{eq:center-mean}
+    \sqrt{n}(p_1-p_2) \to \delta/(\phi(1-\phi)).
+\end{equation}
+On the other hand, for the denominator, we have
+\begin{align}
+    &\sqrt{n}\sqrt{\frac{{p_1}(1-{p_1})}{n_1} + \frac{{p_2}(1-{p_2})}{n_2}} \sim \sqrt{\frac{{p_1}(1-{p_1})}{\phi} + \frac{{p_2}(1-{p_2})}{1-\phi}} \nonumber \\
+    % &= \Bigg(\frac{(\theta + O(1/\sqrt{n}))(1-\theta + O(1/\sqrt{n}))}{\phi} \,\, + \nonumber \\  &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad + \frac{(\theta + O(1/\sqrt{n}))(1-\theta + O(1/\sqrt{n}))}{1-\phi}\Bigg)^{1/2} \nonumber \\
+    &= \Bigg(\frac{(\theta + O(1/\sqrt{n}))(1-\theta + O(1/\sqrt{n}))}{\phi} + \frac{(\theta + O(1/\sqrt{n}))(1-\theta + O(1/\sqrt{n}))}{1-\phi}\Bigg)^{1/2} \nonumber \\
+    &\sim \sqrt{(\theta(1-\theta)) / (\phi(1-\phi))}. \label{eq:center-sd}
+\end{align}
+Dividing \eqref{eq:center-mean} by \eqref{eq:center-sd}, in view of \eqref{eq:dist-statistic}, we conclude that the centers of the distribution of $t$ converges to 
+$$\delta/\sqrt{\theta(1-\theta)\phi(1-\phi)},$$
+which is precisely the square root of the non-centrality parameter in \eqref{eq:non-centrality}.
+Finally, the conclusion in Theorem \ref{thm:1} follows from the fact that the square of a normal distribution with mean $\sqrt{\lambda}$ is equal in distribution to a chi-square distribution with non-centrality parameter $\lambda$.
+

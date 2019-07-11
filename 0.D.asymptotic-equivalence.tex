@@ -1,0 +1,200 @@
+In genetic association studies, researchers have the freedom to choose their favorite statistical procedure to perform hypothesis tests with the data collected.
+In this section, we answer the natural question that arises: does the choice of statistical test influence the power of scientific discovery?
+
+It turns out, perhaps unsurprisingly, that most common association tests have asymptotically equivalent power. 
+We shall quantify this shared power limit, and provide practical formulas for power calculations.
+
+\subsection{A model-invariant parametrization}
+
+In association studies for qualitative traits, counts of subjects in each phenotype-genetic variant combination are tabulated in the form of a contingency table.
+For a 2-allele-variant-by-2-phenotype definition, we have the following table of counts.
+
+\begin{center}
+    \begin{tabular}{cccc}
+    \hline
+    & \multicolumn{2}{c}{Genotype} & \\
+    \cline{2-3}
+    \# Observations & Variant 1 & Variant 2 & Total by phenotype \\
+    \hline
+    Cases & $O_{11}$ & $O_{12}$ & $n_1$ \\
+    Controls & $O_{21}$ & $O_{22}$ & $n_2$ \\
+    \hline
+    \end{tabular}
+\end{center}
+
+Statistics are then calculated based on the counts, to test for associations between the genotypes and phenotypes, at levels adjusted for multiplicity.
+Performance of a test is measured in terms of power, i.e., probability of correct rejection under an alternative hypothesis.
+
+As we have seen in Section \ref{sec:disease-models}, power analysis typically starts by assuming an alternative distribution, typically (though not necessarily) described by a disease model.
+Power of a test is approximated either based on large sample asymptotics, or by simulating the empirical distribution of the statistic under the alternative.
+
+Recall the 2-by-2 multinomial distributions with probability matrix $\mu = (\mu_{ij})_{2\times2}$,
+\begin{center}
+    \begin{tabular}{cccc}
+    \hline
+    & \multicolumn{2}{c}{Allele type} \\
+    \cline{2-3}
+    Prob. in study & Risk allele & Non-risk allele & Total by phenotype \\
+    \hline
+    Cases & $\mu_{11}$ & $\mu_{12}$ & $\phi = \mu_{11} + \mu_{12}$ \\
+    Controls & $\mu_{21}$ & $\mu_{22}$ & $1-\phi = \mu_{21} + \mu_{22}$ \\
+    \hline
+    \end{tabular}
+\end{center}
+
+We may assume -- by relabelling, and hence without loss of generality -- that allele Variant 1 is positively associated with the Cases, and referred to as the risk allele/variant. 
+
+The multinomial probability matrix $\mu$ can be fully parametrized by the parameter triple:
+
+\begin{itemize}
+    \item Fraction of Cases $\phi$, i.e., marginal distribution of phenotypes.
+    \item Conditional distribution of risk variant among Controls, i.e., risk allele frequency (RAF) in the Control group 
+    \begin{equation} \label{eq:risk-allele-frequency}
+    f := \mu_{21}/(1-\phi).
+    \end{equation}
+    \item Odds ratio (OR) of the allele Variant 1 to Variant 2
+    \begin{equation} \label{eq:odds-ratio}
+    \text{R} := \frac{\mu_{11}}{\mu_{21}}\Big/\frac{\mu_{12}}{\mu_{22}}
+    = \frac{\mu_{11}\mu_{22}}{\mu_{12}\mu_{21}}.
+    \end{equation}
+\end{itemize}
+
+An alternative hypothesis, e.g., a disease model, determines the canonical parameters $(f, R)$ implicitly,
+%The fraction of Cases $\phi$ is part of the study design.
+and therefore fully determines statistical power for a specific test at given sample sizes.
+Alternatively, power can also be calculated by directly prescribing the canonical parameters and the sample sizes.
+
+It is worth pointing out that while disease models play no role beyond specifying the alternative, they do sometimes inform our choice of a test statistic, hence influencing statistical power in higher order contingency tables.
+These tests include, e.g., the Cochran-Armitage test, and variations thereof;
+see \cite{Gonzalez08, Li08} for further examples where tests are tailored to disease models. 
+
+We make the important distinction between RAF \emph{in the Control group} ($f$), versus RAF \emph{in the study} ($\mu_{11}+\mu_{21}$), and RAF \emph{in the general population} ($p$).
+In the following sections, unless otherwise stated, RAF will refer to the risk allele frequency in the Control group, consistent with the reporting standards of the NHGRI-EBI Catalog \citep{MacArthur16}.
+
+\subsection{Conditional vs unconditional tests}
+
+Readers familiar with the underlying assumptions of association tests in contingency tables may have noticed that we have described a multinomial distribution of the cell counts.
+That is, we have only conditioned on the total number of observations in the study.
+This is indeed the assumption behind tests such as (the original, unconditional version of) the likelihood ratio test, and the Person chi-square test.
+
+It is not, however, the assumption behind some other tests.
+For example, analysis of t-tests typically assumes the observed number in each arm of the study are given.
+That is, we would condition on the phenotype marginals when comparing the proportions of genetic variants among the Cases and Controls.
+It is perhaps an assumption most close to reality, where the number of samples collected in each arm of the study are pre-determined.
+In this case, we have two binomial observations, Binom$(n_1, p_1)$ and Binom$(n_2, p_2)$, instead of a multinomial observation.
+\begin{center}
+    \begin{tabular}{cccc}
+    \hline
+    & \multicolumn{2}{c}{Allele type} \\
+    \cline{2-3}
+    Cond. Prob. & Variant 1 & Variant 2 & Counts by phenotype \\
+    \hline
+    Cases & $p_{1}$ & $1-p_{1}$ & $n_1$ \\
+    Controls & $p_{2}$ & $1-p_{2}$ & $n_2$ \\
+    \hline
+    \end{tabular}
+\end{center}
+RAF and OR can be similarly defined,
+\begin{itemize}
+    \item Marginal distribution of Cases, fixed at $\phi := n_1/(n_1+n_2)$,
+    \item Risk allele frequency (RAF) in the Control group is the synonymous with the conditional distribution of risk variant among Controls, $$f := p_2,$$
+    \item Odds ratio (OR)
+    $$\text{R} := \frac{p_{1}\phi}{p_{2}(1-\phi)}\Big/\frac{(1-p_{1})\phi}{(1-p_{2})(1-\phi)}
+    = \frac{p_{1}(1-p_{2})}{(1-p_{1})p_{2}}.
+    $$
+\end{itemize}
+Alternative hypotheses may be formed as in the multinomial case with parameters $\phi$, $f$ and $R$, along with the total samples size.
+
+Finally, we mention the assumptions behind the Fisher's exact test.
+The Fisher exact test conditions on the number of observations of both the phenotype variants and genetic variants, leading to a hypergeometric distribution of the first cell count $O_{11}$ given the marginals $n_1$, $n_2$, and $O_{11}+O_{21}$, under the null hypothesis.
+We found no easy parametrizations of alternative hypotheses under this framework.
+Indeed, existing power calculations for Fisher's exact test resort to simulations under the two-binomial assumptions \citep{Smyth17}.
+
+We refer interested readers to the recent work by \citet{Ripamonti17} and \citet{Choi17} which elucidate the controversies regarding the choices of conditioning when performing statistical inferences on 2-by-2 contingency tables.
+We do not attempt to resolve the controversies in this work.
+Our goal is to state clearly the assumptions behind the tests, and show the asymptotic equivalence in terms of power, under their respective assumptions.
+
+\subsection{A test-independent power analysis}
+\label{subsec:power-calculation}
+
+We now present the main result allowing a unified power analysis, applicable for a wide range of common association tests in 2-by-2 tables.
+% This is formalized in Theorem \ref{thm:1} below, where we show a number of tests enjoy the same power asymptotically.
+% This unifies, and simplifies power calculations.
+
+If we consider a fixed parameter values of $(f, R)$ under the alternative, no matter how close to the null, the probability of rejection of the null hypothesis by any reasonable test should approach one as sample size increases ($n\to\infty$).
+On the other hand, the probability of rejection is less than one in finite samples, making this type of asymptotics useless for approximation.
+
+Therefore, in order to find finer approximations of power, we study alternatives close to the null.
+In particular, we take a sequence of alternatives approaching a limit point in the null space, in the hope that limiting rejection probability is between 0 and 1.
+It turns out -- see, e.g., \citet{Ferguson17} Chapter 10, and \citet{Lehmann04} Chapter 5 -- that the appropriate rate at which the alternatives should shrink towards the limit point is $1/\sqrt{n}$. % and the appropriate limit point is the maximum likelihood estimate (MLE) of the probabilities under the null hypothesis (which happens to coincide with the minimum chi-square estimates).
+
+Under the multinomial assumption, let $\mu^{(0)}$ be the probability matrix of the (independent) 2-by-2 multinomial distribution, with marginals $(\theta, 1-\theta)$ for the genetic variants, and marginals $(\phi, 1-\phi)$ for the phenotypes.
+We require that $\theta\in(0,1)$ and $\phi\in(0,1)$ be bounded away from 0 and 1.
+Let $\mu = \mu^{(n)}$ be the sequence of alternatives such that 
+\begin{equation} \label{eq:alternative-multinomial}
+    \sqrt{n}(\mu^{(n)} - \mu^{(0)}) \rightarrow \delta \begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix},
+\end{equation}
+where $\delta$ is a positive constant.
+
+Equivalently, under the two-binomial assumption, let $p_1^{(0)} = p_2^{(0)} = \theta$ be the null hypothesis, with fixed marginals $(\phi, 1-\phi)$ for the phenotypes.
+Let $(p_1, p_2) = p^{(n)}$ be the sequence of alternatives such that 
+\begin{equation} \label{eq:alternative-two-bionomial}
+    \sqrt{n}\phi (p_1-\theta) \rightarrow \delta
+    \quad \text{and} \quad 
+    \sqrt{n}(1-\phi) (p_2-\theta) \rightarrow -\delta,
+\end{equation}
+where $\delta$ is a positive constant.
+It is easy to see that with the same $\delta$ the two sequences of alternatives have the same RAF and OR, and therefore have the same expected number of observations in each cell.
+
+\begin{theorem} \label{thm:1}
+In 2-by-2 contingency tables, under the assumption that the counts in the contingency table follow the multinomial distributions.
+%\vspace{-5pt}
+\begin{itemize}
+    \item The likelihood ratio test for independence,
+    \item the likelihood ratio test for zero slope in logistic regressions,
+    \item Person's chi-squared test for Independence,
+\end{itemize}
+%\vspace{-5pt}
+and under the assumption that counts in the contingency table follow the two binomial distributions, 
+%\vspace{-5pt}
+\begin{itemize}
+    \item the two-sided Welch's t-test for equal proportions 
+\end{itemize} 
+%\vspace{-5pt}
+have the same asymptotic power curves.
+Specifically, for the sequence of alternatives defined in \eqref{eq:alternative-multinomial} and \eqref{eq:alternative-two-bionomial}, all of the listed tests, at level $\alpha$, have statistical powers converging to 
+\begin{equation} \label{eq:power-approx}
+    \mathbb P[\chi^2(\lambda) \ge q_{\alpha}],
+\end{equation}
+where $q_{\alpha}$ is the upper $\alpha$ quantile of the central chi-square distribution, and $\chi^2(\lambda)$ is a non-central chi-square distribution with non-centrality parameter
+\begin{equation} \label{eq:non-centrality}
+    \lambda = \delta^2/{(\theta(1-\theta)\phi(1-\phi))}.
+\end{equation}
+\end{theorem}
+
+The proof of Theorem \ref{thm:1} is detailed in Section \ref{sec:proof} below.
+
+Theorem \ref{thm:1} is the central result that paves the way for a unified power analysis.
+It allows us to chart findings from different studies employing the applicable tests in the same diagram, with the same power limits.
+In particular, for large samples, tests for zero slopes in logistic regressions should report approximately the same set of loci as Welch's t-tests for equal proportions on the same dataset, after the same family-wise error rate adjustments.
+The estimated odds ratios (in the case of logistic regression, estimate slopes exponentiated) and RAF's, when charted on the OR-RAF diagram, should also follow the same power limits.
+
+To use this result for power calculations, we start with an alternative hypothesis, defined by the canonical parameters $(f, R)$, and sample sizes $(\phi, n)$.
+\begin{center}
+    \begin{tabular}{ccc}
+    \hline
+    & \multicolumn{2}{c}{Allele type} \\
+    \cline{2-3}
+    Probabilities & Variant 1 & Variant 2 \\
+    \hline
+    Cases & ${fR\phi}/{(fR+1-f)}$ & ${(1-f)\phi}/{(fR+1-f)}$ \\
+    Controls & $f(1-\phi)$ & $(1-f)(1-\phi)$ \\
+    \hline
+    \end{tabular}
+\end{center}
+Elementary algebra yields $\theta = {fR\phi}/{(fR+1-f)} + f(1-\phi)$, and $\delta = \sqrt{n}(\theta - f)(1-\phi)$.
+If tests are based on allele type counts, accounting for the fact that each genetic location has a pair of alleles, the effective sample sizes should be doubled, and the appropriate non-centrality parameter becomes  $\delta = \sqrt{2n}(\theta - f)(1-\phi)$.
+Power may then be approximated using the formula in \eqref{eq:power-approx}.
+% We conjecture that all aforementioned tests are asymptotically equivalent, in both the multinomial and two-binomial framework.
+
+
